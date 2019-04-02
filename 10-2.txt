@@ -1,0 +1,195 @@
+private String name;
+	private String content;
+	private Double size;
+	private Double priorityLevel;
+	private Date createdDate;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Double getSize() {
+		return size;
+	}
+	public void setSize(Double size) {
+		this.size = size;
+	}
+	public Double getPriorityLevel() {
+		return priorityLevel;
+	}
+	public void setPriorityLevel(Double priorityLevel) {
+		this.priorityLevel = priorityLevel;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public PriorityLevelComparator(String name, String content, Double size, Double priorityLevel, Date createdDate) {
+		super();
+		this.name = name;
+		this.content = content;
+		this.size = size;
+		this.priorityLevel = priorityLevel;
+		this.createdDate = createdDate;
+	}
+	public PriorityLevelComparator() {
+		super();
+	}
+	
+}
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Note {
+private String	name;  
+private String	content;  
+private Double	size;  
+private Date createdDate;
+private Double	priorityLevel;  
+
+	public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public String getContent() {
+	return content;
+}
+
+public void setContent(String content) {
+	this.content = content;
+}
+
+public Double getSize() {
+	return size;
+}
+
+public void setSize(Double size) {
+	this.size = size;
+}
+
+public Date getCreatedDate() {
+	return createdDate;
+}
+
+public void setCreatedDate(Date createdDate) {
+	this.createdDate = createdDate;
+}
+
+public Double getPriorityLevel() {
+	return priorityLevel;
+}
+
+public void setPriorityLevel(Double priorityLevel) {
+	this.priorityLevel = priorityLevel;
+}
+
+	public Note() {
+	super();
+}
+
+	public Note(String name, String content, Double size, Date createdDate, Double priorityLevel) {
+		super();
+		this.name = name;
+		this.content = content;
+		this.size = size;
+		this.createdDate = createdDate;
+		this.priorityLevel = priorityLevel;
+	}
+
+	public static Note createNote(String detail) throws NumberFormatException, ParseException {
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+		String s[]=detail.split(",");
+Note n=new Note(s[0],s[1],Double.parseDouble(s[2]),sdf.parse(s[3]),Double.parseDouble(s[4]));
+	return n;
+	}
+	
+}
+
+
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+public class Notebook {
+private	String name; 
+private List<Note> noteList; 
+
+	
+	public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public List<Note> getNoteList() {
+	return noteList;
+}
+
+public void setNoteList(List<Note> noteList) {
+	this.noteList = noteList;
+}
+
+	public Notebook() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+	public Notebook(String name, List<Note> noteList) {
+		super();
+		this.name = name;
+		this.noteList = noteList;
+	}
+
+	public void addNoteToBook(Note note) {
+	noteList.add(note);	
+	}
+	
+	public Boolean removeNoteFromBook(String name) {
+	for(int i=0;i<noteList.size();i++)
+	{
+		if(noteList.get(i).getName().equals(name))
+		{
+			noteList.remove(i);
+			return true;
+		}
+	}
+	return false;
+
+	}
+	
+	public void displayNotes() {
+	if(noteList.isEmpty())
+	{
+		System.out.println("No notes to show");
+	}
+	else
+	{
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+		System.out.println("Notes in:"+name);
+		System.out.printf("%-15s%-25s%-10s%-15s%-10s\n", "Name", "Content","Size","Created Date","Priority Level");
+		for(Note n:noteList)
+		{
+			System.out.printf("%-15s%-25s%-10s%-15s%-10s\n",n.getName(),n.getContent(),n.getSize(),sdf.format(n.getCreatedDate()),n.getPriorityLevel());	
+		}
+	}
+
+	}
+}
